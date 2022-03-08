@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import NavBar from "./components/NavBar";
+import TodoRows from "./components/TodoRows";
 
 export default class App extends Component {
   constructor(props) {
@@ -46,20 +47,10 @@ export default class App extends Component {
       ),
     });
 
-  //maps each of the values in the todoItems state array to the DOM with a checkbox
-  //not sure why this is written this way
+  //loops through all the values in the todoItems state array
   todoRows = () =>
-    this.state.todoItems.map((item, index) => (
-      <>
-        <div key={item.action}>{item.action}</div>
-        <input
-          key={index}
-          type="checkbox"
-          //set the checked box to reflect its state *
-          checked={item.completed}
-          onChange={() => this.toggleDone(item)} //not sure why this needs to be a callback function
-        />
-      </>
+    this.state.todoItems.map((item) => (
+      <TodoRows key={item.action} item={item} callback={this.toggleDone} />
     ));
 
   render = () => {
