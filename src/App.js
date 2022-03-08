@@ -10,12 +10,12 @@ export default class App extends Component {
       username: "Matthew",
       todoItems: [
         { action: "buy groceries", completed: false },
-        { action: "wash dog", completed: false },
+        { action: "wash dog", completed: true },
         { action: "exercise", completed: false },
       ],
       newTodo: "",
     };
-    this.todoRows = this.todoRows.bind(this);
+    // this.todoRows = this.todoRows.bind(this);
     this.updateValue = this.updateValue.bind(this);
     this.newToDo = this.newToDo.bind(this);
     this.toggleDone = this.toggleDone.bind(this);
@@ -47,12 +47,6 @@ export default class App extends Component {
       ),
     });
 
-  //loops through all the values in the todoItems state array
-  todoRows = () =>
-    this.state.todoItems.map((item) => (
-      <TodoRows key={item.action} item={item} callback={this.toggleDone} />
-    ));
-
   render = () => {
     return (
       <div className="container">
@@ -64,7 +58,31 @@ export default class App extends Component {
           onChange={this.updateValue}
         />
         <button onClick={this.newToDo}>Submit</button>
-        <div>{this.todoRows()}</div>
+        <div className="title">Tasks to complete</div>
+        {this.state.todoItems.map((item) => {
+          return (
+            !item.completed && (
+              <TodoRows
+                key={item.action}
+                item={item}
+                callback={this.toggleDone}
+              />
+            )
+          );
+        })}
+
+        <div className="title">Completed tasks</div>
+        {this.state.todoItems.map((item) => {
+          return (
+            item.completed && (
+              <TodoRows
+                key={item.action}
+                item={item}
+                callback={this.toggleDone}
+              />
+            )
+          );
+        })}
       </div>
     );
   };
