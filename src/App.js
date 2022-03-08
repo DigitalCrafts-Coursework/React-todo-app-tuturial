@@ -10,12 +10,12 @@ export default class App extends Component {
       username: "Matthew",
       todoItems: [
         { action: "buy groceries", completed: false },
-        { action: "wash dog", completed: true },
+        { action: "wash dog", completed: false },
         { action: "exercise", completed: false },
       ],
       newTodo: "",
     };
-    // this.todoRows = this.todoRows.bind(this);
+    this.delete = this.delete.bind(this);
     this.updateValue = this.updateValue.bind(this);
     this.newToDo = this.newToDo.bind(this);
     this.toggleDone = this.toggleDone.bind(this);
@@ -47,6 +47,15 @@ export default class App extends Component {
       ),
     });
 
+  //delete task on checkbox click
+  delete = (selectedToDo) =>
+    this.state.todoItems.map((item, index) => {
+      return (
+        item.action === selectedToDo.action &&
+        this.setState({ todoItems: this.state.todoItems.splice(index, 1) })
+      );
+    });
+
   render = () => {
     return (
       <div className="container">
@@ -56,6 +65,7 @@ export default class App extends Component {
           className="inputBox"
           value={this.state.newTodo}
           onChange={this.updateValue}
+          delete={this.delete}
         />
         <button onClick={this.newToDo}>Submit</button>
         <div className="title">Tasks to complete</div>
@@ -65,7 +75,8 @@ export default class App extends Component {
               <TodoRows
                 key={item.action}
                 item={item}
-                callback={this.toggleDone}
+                update={this.toggleDone}
+                delete={this.delete}
               />
             )
           );
@@ -78,7 +89,8 @@ export default class App extends Component {
               <TodoRows
                 key={item.action}
                 item={item}
-                callback={this.toggleDone}
+                update={this.toggleDone}
+                delete={this.delete}
               />
             )
           );

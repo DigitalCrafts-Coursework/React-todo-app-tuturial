@@ -6,3 +6,7 @@
   font-weight: bold;
   background-color: lightgoldenrodyellow;
 }
+
+.task-container * {
+  display: inline;
+}
