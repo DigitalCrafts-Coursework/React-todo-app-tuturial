@@ -15,7 +15,7 @@ export default class App extends Component {
       ],
       newTodo: "",
     };
-    this.delete = this.delete.bind(this);
+    this.deleteTask = this.deleteTask.bind(this);
     this.updateValue = this.updateValue.bind(this);
     this.newToDo = this.newToDo.bind(this);
     this.toggleDone = this.toggleDone.bind(this);
@@ -48,13 +48,13 @@ export default class App extends Component {
     });
 
   //delete task on checkbox click
-  delete = (selectedToDo) =>
-    this.state.todoItems.map((item, index) => {
-      return (
-        item.action === selectedToDo.action &&
-        this.setState({ todoItems: this.state.todoItems.splice(index, 1) })
-      );
+  deleteTask = (selectedToDo) => {
+    return this.setState({
+      todoItems: this.state.todoItems.filter(
+        (item) => item.action !== selectedToDo.action
+      ),
     });
+  };
 
   render = () => {
     return (
@@ -65,7 +65,6 @@ export default class App extends Component {
           className="inputBox"
           value={this.state.newTodo}
           onChange={this.updateValue}
-          delete={this.delete}
         />
         <button onClick={this.newToDo}>Submit</button>
         <div className="title">Tasks to complete</div>
@@ -76,7 +75,7 @@ export default class App extends Component {
                 key={item.action}
                 item={item}
                 update={this.toggleDone}
-                delete={this.delete}
+                delete={this.deleteTask}
               />
             )
           );
@@ -90,7 +89,7 @@ export default class App extends Component {
                 key={item.action}
                 item={item}
                 update={this.toggleDone}
-                delete={this.delete}
+                delete={this.deleteTask}
               />
             )
           );

@@ -15,7 +15,6 @@ export default class TodoRows extends Component {
         <div>{this.props.item.action}</div>
         <input
           type="checkbox"
-          //set the checked box to reflect its state *
           checked={this.props.item.completed}
           onChange={() => this.props.delete(this.props.item)}
         />
